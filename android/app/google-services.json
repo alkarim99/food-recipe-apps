@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "91681423252",
+    "firebase_url": "https://food-recipe-apps-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "food-recipe-apps",
+    "storage_bucket": "food-recipe-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91681423252:android:cf93432e9949a96dcb5981",
+        "android_client_info": {
+          "package_name": "com.food_recipe_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91681423252-es5f30qfffdv718u6i629mtfdjoisdes.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPYjyQ7loZvAvqKm4mko0quYINt01XqQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91681423252-es5f30qfffdv718u6i629mtfdjoisdes.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91681423252:android:c0d7d54f7d2b2b70cb5981",
+        "android_client_info": {
+          "package_name": "com.food_recipe_apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91681423252-es5f30qfffdv718u6i629mtfdjoisdes.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPYjyQ7loZvAvqKm4mko0quYINt01XqQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91681423252-es5f30qfffdv718u6i629mtfdjoisdes.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

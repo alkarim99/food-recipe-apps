@@ -42,7 +42,7 @@ function DetailRecipe(props) {
         style={backgroundStyle}>
         <View>
           <Image
-            source={recipe.photo}
+            source={{uri: recipe.recipePicture}}
             style={{
               width: '100%',
               height: 400,
@@ -70,9 +70,9 @@ function DetailRecipe(props) {
               bottom: 0,
             }}>
             <Text numberOfLines={2} style={styles.recipeName}>
-              {recipe.name}
+              {recipe.title}
             </Text>
-            <Text style={styles.recipeAuthor}>By Chef Abdullah Al-Karim</Text>
+            {/* <Text style={styles.recipeAuthor}>By Chef Abdullah Al-Karim</Text> */}
           </View>
         </View>
         <View style={styles.recipeDetail}>
@@ -97,7 +97,7 @@ function DetailRecipe(props) {
             </Pressable>
           </View>
           {ingredients == true ? (
-            recipe.ingredients.map((ingredient, index) => {
+            recipe.ingredients.split(', ').map((ingredient, index) => {
               return (
                 <>
                   <Text style={styles.ingredient} key={index}>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 10,
     marginLeft: 20,
-    marginBottom: 5,
+    marginBottom: 35,
     fontSize: 35,
     fontWeight: 'bold',
   },

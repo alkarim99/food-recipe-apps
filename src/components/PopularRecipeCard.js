@@ -8,10 +8,13 @@ function PopularRecipeCard(props) {
     <>
       <Pressable onPress={() => navigation.navigate('DetailRecipe', {recipe})}>
         <View style={styles.popularCard}>
-          <Image source={recipe.photo} style={styles.popularImage} />
+          <Image
+            source={{uri: recipe?.recipePicture}}
+            style={styles.popularImage}
+          />
           <View>
             <Text style={styles.popularText} numberOfLines={1}>
-              {recipe.name}
+              {recipe?.title}
             </Text>
             <Text>spicy, salted</Text>
           </View>

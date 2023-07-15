@@ -13,7 +13,7 @@ function NewRecipeCard(props) {
             marginRight: 15,
           }}>
           <Image
-            source={recipe.photo}
+            source={{uri: recipe?.recipePicture}}
             style={{
               width: 150,
               height: 200,
@@ -27,7 +27,7 @@ function NewRecipeCard(props) {
               bottom: 0,
             }}>
             <Text numberOfLines={2} style={styles.newRecipeText}>
-              {recipe.name}
+              {recipe?.title}
             </Text>
           </View>
         </View>
