@@ -3,10 +3,11 @@ import React from 'react';
 import {StyleSheet, View, Image, Text, Pressable} from 'react-native';
 
 function PopularRecipeCard(props) {
-  const {recipe, navigation} = props;
+  const {recipe, navigation, from} = props;
   return (
     <>
-      <Pressable onPress={() => navigation.navigate('DetailRecipe', {recipe})}>
+      <Pressable
+        onPress={() => navigation.navigate('DetailRecipe', {recipe, from})}>
         <View style={styles.popularCard}>
           <Image
             source={{uri: recipe?.recipePicture}}

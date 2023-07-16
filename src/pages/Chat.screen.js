@@ -4,22 +4,21 @@ import {
   StyleSheet,
   Pressable,
   View,
-  Image,
   Text,
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import {GiftedChat, Bubble} from 'react-native-gifted-chat';
+import {GiftedChat} from 'react-native-gifted-chat';
 import EmojiSelector from 'react-native-emoji-selector';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
+import database from '@react-native-firebase/database';
 
 function Chat(props) {
   const {navigation} = props;
   const [messages, setMessages] = React.useState([]);
   const [showEmoji, setShowEmoji] = React.useState(false);
   const [text, setText] = React.useState('');
-  const [user, setUser] = React.useState(null);
   const state = useSelector(state => state);
   const [profile, setProfile] = React.useState([]);
 
@@ -42,6 +41,12 @@ function Chat(props) {
           },
         },
       ]);
+      database()
+        .ref()
+        .once('value')
+        .then(snapshot => {
+          console.log('Messages data: ', snapshot.val());
+        });
     }
   }, []);
 
@@ -49,6 +54,12 @@ function Chat(props) {
     setMessages(previousMessages =>
       GiftedChat.append(previousMessages, messages),
     );
+    const newReference = database().ref().push();
+    newReference
+      .set({
+        messages,
+      })
+      .then(() => console.log('Data updated.'));
   }, []);
 
   return (

@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -58,15 +59,24 @@ function Home(props) {
     //   });
   }, []);
 
+  const handleSearch = searchQuery => {
+    axios
+      .get(`https://vast-mite-smock.cyclic.app/recipes?keyword=${searchQuery}`)
+      .then(response => {
+        const result = response?.data?.data;
+        props.navigation.navigate('Result', {result});
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   let displayNewRecipes = [];
   let displayPopularRecipes = [];
   for (let index = 0; index < 5; index++) {
     displayNewRecipes.push(newRecipes[index]);
     displayPopularRecipes.push(popularRecipes[index]);
   }
-
-  // const reference = database().ref('/users/123');
-  // console.log(reference);
 
   return (
     <>
@@ -84,6 +94,9 @@ function Home(props) {
               onChangeText={onChangeSearch}
               value={searchQuery}
               style={{marginBottom: 23}}
+              onSubmitEditing={event => {
+                handleSearch(searchQuery);
+              }}
             />
             {/* Popular For You */}
             <View style={{marginBottom: 10}}>
@@ -158,7 +171,10 @@ function Home(props) {
                 alignItems: 'center',
               }}>
               <Text style={styles.titleText}>Popular Recipes</Text>
-              <Text>More Info</Text>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('More')}>
+                <Text>More Info</Text>
+              </TouchableOpacity>
             </View>
             <ScrollView style={{marginBottom: 100}}>
               {displayPopularRecipes?.length != 0 ? (
@@ -168,6 +184,7 @@ function Home(props) {
                       navigation={props.navigation}
                       recipe={recipe}
                       key={index}
+                      from={'home'}
                     />
                   );
                 })
@@ -180,11 +197,10 @@ function Home(props) {
             {/* End Popular Recipes */}
           </View>
         </ScrollView>
-
-        {/* Bottom Navigation */}
-        <BottomNav navigation={props.navigation} active={'Home'} />
-        {/* End of Bottom Navigation */}
       </View>
+      {/* Bottom Navigation */}
+      <BottomNav navigation={props.navigation} active={'Home'} />
+      {/* End of Bottom Navigation */}
     </>
   );
 }

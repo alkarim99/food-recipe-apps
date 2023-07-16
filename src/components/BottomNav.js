@@ -15,7 +15,7 @@ function BottomNav(props) {
         padding: 20,
         backgroundColor: '#fff',
         position: 'absolute',
-        bottom: 20,
+        bottom: 0,
         width: '100%',
       }}>
       <Pressable onPress={() => navigation.navigate('Home')}>
@@ -26,12 +26,12 @@ function BottomNav(props) {
           style={active == 'Home' ? styles.iconActive : styles.icon}
         />
       </Pressable>
-      <Pressable onPress={() => navigation.navigate('Login')}>
+      <Pressable onPress={() => navigation.navigate('AddRecipe')}>
         <Icon
           name="plus"
           size={20}
-          color={active == 'Login' ? '#eeeeee' : '#6e80b0'}
-          style={active == 'Login' ? styles.iconActive : styles.icon}
+          color={active == 'AddRecipe' ? '#eeeeee' : '#6e80b0'}
+          style={active == 'AddRecipe' ? styles.iconActive : styles.icon}
         />
       </Pressable>
       <Pressable onPress={() => navigation.navigate('Chat')}>

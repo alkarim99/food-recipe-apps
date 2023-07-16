@@ -122,8 +122,8 @@ function Profile(props) {
             </Pressable>
           </View>
         </ScrollView>
-        <BottomNav navigation={props.navigation} active={'Profile'} />
       </View>
+      <BottomNav navigation={props.navigation} active={'Profile'} />
     </>
   );
 }

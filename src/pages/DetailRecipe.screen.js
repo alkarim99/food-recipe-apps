@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 function DetailRecipe(props) {
   const {navigation, route} = props;
-  const {recipe} = route.params;
+  const {recipe, from} = route.params;
   const isDarkMode = useColorScheme() === 'dark';
 
   const [ingredients, SetIngredients] = React.useState(true);
@@ -60,7 +60,12 @@ function DetailRecipe(props) {
               backgroundColor: 'rgba(0, 0, 0, 0.7)',
               borderRadius: 100,
             }}>
-            <Pressable onPress={() => navigation.navigate('Home')}>
+            <Pressable
+              onPress={() =>
+                from == 'more'
+                  ? navigation.navigate('More')
+                  : navigation.navigate('Home')
+              }>
               <Icon name="arrow-left" size={30} color="#fff" />
             </Pressable>
           </View>

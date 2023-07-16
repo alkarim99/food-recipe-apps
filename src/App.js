@@ -16,6 +16,9 @@ import Register from './pages/Register.screen';
 import DetailRecipe from './pages/DetailRecipe.screen';
 import Profile from './pages/Profile.screen';
 import Chat from './pages/Chat.screen';
+import More from './pages/More.screen';
+import Result from './pages/Result.screen';
+import AddRecipe from './pages/AddRecipe.screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +70,21 @@ function App() {
               <Stack.Screen
                 name="Chat"
                 component={Chat}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="More"
+                component={More}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Result"
+                component={Result}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="AddRecipe"
+                component={AddRecipe}
                 options={{headerShown: false}}
               />
             </Stack.Navigator>
