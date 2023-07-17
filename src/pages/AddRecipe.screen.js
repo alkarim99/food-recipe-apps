@@ -10,12 +10,22 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import {useSelector, useDispatch} from 'react-redux';
+import {addAuth} from '../store/reducers/authSlice';
 
 function AddRecipe(props) {
   const {navigation} = props;
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
   const [title, SetTitle] = React.useState([]);
   const [videoLink, SetVideoLink] = React.useState([]);
   const [ingredients, SetIngredients] = React.useState([]);
+
+  React.useEffect(() => {
+    if (Object.keys(state.authSlice.userData).length == 0) {
+      navigation.navigate('Login');
+    }
+  }, []);
 
   return (
     <>
@@ -25,7 +35,7 @@ function AddRecipe(props) {
           style={{marginRight: 20}}>
           <Icon name="chevron-left" size={30} color="#EEC302" />
         </Pressable>
-        <Text style={styles.headerText}>Popular Recipe</Text>
+        <Text style={styles.headerText}>Add New Recipe</Text>
       </View>
       <ScrollView style={{padding: 10}}>
         <View style={{paddingBottom: 100}}>

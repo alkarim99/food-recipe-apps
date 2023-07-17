@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
@@ -25,6 +26,7 @@ function Profile(props) {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+  const {width, height} = Dimensions.get('window');
 
   React.useEffect(() => {
     if (Object.keys(state.authSlice.userData).length == 0) {
@@ -46,7 +48,11 @@ function Profile(props) {
 
   return (
     <>
-      <View>
+      <View
+        style={{
+          width,
+          height,
+        }}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}>
@@ -122,8 +128,8 @@ function Profile(props) {
             </Pressable>
           </View>
         </ScrollView>
+        <BottomNav navigation={props.navigation} active={'Profile'} />
       </View>
-      <BottomNav navigation={props.navigation} active={'Profile'} />
     </>
   );
 }

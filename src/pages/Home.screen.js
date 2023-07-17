@@ -197,10 +197,10 @@ function Home(props) {
             {/* End Popular Recipes */}
           </View>
         </ScrollView>
+        {/* Bottom Navigation */}
+        <BottomNav navigation={props.navigation} active={'Home'} />
+        {/* End of Bottom Navigation */}
       </View>
-      {/* Bottom Navigation */}
-      <BottomNav navigation={props.navigation} active={'Home'} />
-      {/* End of Bottom Navigation */}
     </>
   );
 }

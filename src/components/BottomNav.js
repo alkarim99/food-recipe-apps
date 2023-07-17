@@ -15,7 +15,7 @@ function BottomNav(props) {
         padding: 20,
         backgroundColor: '#fff',
         position: 'absolute',
-        bottom: 0,
+        bottom: 20,
         width: '100%',
       }}>
       <Pressable onPress={() => navigation.navigate('Home')}>
