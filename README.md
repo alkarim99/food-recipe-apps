@@ -59,21 +59,21 @@ You've successfully run Food Recipe Apps. :partying_face:
 ## Screenshot
 
 1. Home Screen <br>
-   <img src="./screenshots/1-Home.jpg" width="540"/>
+   <img src="./screenshots/1-Home-edit.jpg" width="540"/>
 2. Login Screen <br>
-   <img src="./screenshots/2-Login.jpg" width="540"/>
+   <img src="./screenshots/2-Login-edit.jpg" width="540"/>
 3. Register Screen <br>
-   <img src="./screenshots/3-Register.jpg" width="540"/>
+   <img src="./screenshots/3-Register-edit.jpg" width="540"/>
 4. Profile Screen <br>
-   <img src="./screenshots/4-Profile.jpg" width="540"/>
+   <img src="./screenshots/4-Profile-edit.jpg" width="540"/>
 5. Popular Recipe Screen <br>
-   <img src="./screenshots/5-Popular-Recipe.jpg" width="540"/>
+   <img src="./screenshots/5-Popular-Recipe-edit.jpg" width="540"/>
 6. Search Result Screen <br>
-   <img src="./screenshots/6-Search-Result.jpg" width="540"/>
+   <img src="./screenshots/6-Search-Result-edit.jpg" width="540"/>
 7. Detail Recipe Screen <br>
-   <img src="./screenshots/7-Detail-Recipe.jpg" width="540"/>
-   <img src="./screenshots/8-Detail-Recipe.jpg" width="540"/>
+   <img src="./screenshots/7-Detail-Recipe-edit.jpg" width="540"/>
+   <img src="./screenshots/8-Detail-Recipe-edit.jpg" width="540"/>
 8. Add Recipe Screen <br>
-   <img src="./screenshots/9-Add-Recipe.jpg" width="540"/>
+   <img src="./screenshots/9-Add-Recipe-edit.jpg" width="540"/>
 9. Chat Screen <br>
-   <img src="./screenshots/10-Chat.jpg" width="540"/>
+   <img src="./screenshots/10-Chat-edit.jpg" width="540"/>
