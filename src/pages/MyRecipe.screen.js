@@ -1,34 +1,48 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, ScrollView, View, Text, Pressable} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  Pressable,
+  useColorScheme,
+} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import axios from 'axios';
+import {useSelector, useDispatch} from 'react-redux';
 
 import PopularRecipeCard from '../components/PopularRecipeCard';
 
-function More(props) {
+function MyRecipe(props) {
+  const isDarkMode = useColorScheme() === 'dark';
   const {navigation} = props;
   const [recipes, SetRecipes] = React.useState([]);
+  const state = useSelector(state => state);
+  const [profile, setProfile] = React.useState([]);
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
 
   React.useEffect(() => {
-    axios
-      .get('https://vast-mite-smock.cyclic.app/recipes?sortType=DESC')
-      .then(response => {
-        SetRecipes(response?.data?.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (Object.keys(state.authSlice.userData).length == 0) {
+      navigation.navigate('Login');
+    } else {
+      setProfile(state?.authSlice?.userData);
+      SetRecipes(state?.authSlice?.myRecipes);
+    }
   }, []);
   return (
     <>
       <View style={styles.header}>
         <Pressable
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Profile')}
           style={{marginRight: 20}}>
           <Icon name="chevron-left" size={30} color="#EEC302" />
         </Pressable>
-        <Text style={styles.headerText}>All Recipes</Text>
+        <Text style={styles.headerText}>My Recipes</Text>
       </View>
       <ScrollView style={{padding: 10}}>
         {recipes?.length != 0 ? (
@@ -38,12 +52,12 @@ function More(props) {
                 navigation={props.navigation}
                 recipe={recipe}
                 key={index}
-                from={'more'}
+                from={'myrecipe'}
               />
             );
           })
         ) : (
-          <Text style={{textAlign: 'center'}}>All Recipes is Empty</Text>
+          <Text style={{textAlign: 'center'}}>Your Recipes is Empty</Text>
         )}
       </ScrollView>
     </>
@@ -67,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default More;
+export default MyRecipe;

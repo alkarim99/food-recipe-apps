@@ -4,6 +4,7 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   userData: {},
   token: '',
+  myRecipes: {},
 };
 
 const authSlice = createSlice({
@@ -13,6 +14,7 @@ const authSlice = createSlice({
     addAuth: (state, action) => {
       state.userData = action.payload.userData;
       state.token = action.payload.token;
+      state.myRecipes = action.payload.myRecipes;
     },
   },
 });

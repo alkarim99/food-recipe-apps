@@ -10,16 +10,19 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import {Searchbar} from 'react-native-paper';
+import {Searchbar, Snackbar} from 'react-native-paper';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import axios from 'axios';
 import database from '@react-native-firebase/database';
+import {useSelector, useDispatch} from 'react-redux';
+import {addAuth} from '../store/reducers/authSlice';
 
 import NewRecipeCard from '../components/NewRecipeCard';
 import PopularRecipeCard from '../components/PopularRecipeCard';
 import BottomNav from '../components/BottomNav';
 
 function Home(props) {
+  const state = useSelector(state => state);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -71,6 +74,11 @@ function Home(props) {
       });
   };
 
+  const [isOnProgress, setIsOnProgress] = React.useState(false);
+  const handleFeatureOnProgress = () => {
+    setIsOnProgress(true);
+  };
+
   let displayNewRecipes = [];
   let displayPopularRecipes = [];
   for (let index = 0; index < 5; index++) {
@@ -85,9 +93,7 @@ function Home(props) {
           width,
           height,
         }}>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
           <View style={{padding: 15}}>
             <Searchbar
               placeholder="Search Pasta, Bread, etc"
@@ -102,40 +108,55 @@ function Home(props) {
             <View style={{marginBottom: 10}}>
               <Text style={styles.titleText}>Popular For You</Text>
             </View>
-            <View
-              style={{
-                marginBottom: 23,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <View>
-                <Image
-                  style={styles.icon}
-                  source={require('../assets/icon-1.png')}
-                />
-                <Text style={styles.iconText}>Soup</Text>
+            <View>
+              <View
+                style={{
+                  marginBottom: 30,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <TouchableOpacity onPress={handleFeatureOnProgress}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/icon-1.png')}
+                  />
+                  <Text style={styles.iconText}>Soup</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleFeatureOnProgress}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/icon-2.png')}
+                  />
+                  <Text style={styles.iconText}>Chicken</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleFeatureOnProgress}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/icon-3.png')}
+                  />
+                  <Text style={styles.iconText}>Seafood</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleFeatureOnProgress}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/icon-4.png')}
+                  />
+                  <Text style={styles.iconText}>Dessert</Text>
+                </TouchableOpacity>
               </View>
-              <View>
-                <Image
-                  style={styles.icon}
-                  source={require('../assets/icon-2.png')}
-                />
-                <Text style={styles.iconText}>Chicken</Text>
-              </View>
-              <View>
-                <Image
-                  style={styles.icon}
-                  source={require('../assets/icon-3.png')}
-                />
-                <Text style={styles.iconText}>Seafood</Text>
-              </View>
-              <View>
-                <Image
-                  style={styles.icon}
-                  source={require('../assets/icon-4.png')}
-                />
-                <Text style={styles.iconText}>Dessert</Text>
-              </View>
+              <Snackbar
+                visible={isOnProgress}
+                style={{backgroundColor: '#CB3837'}}
+                onDismiss={() => setIsOnProgress(false)}
+                duration={1000}
+                action={{
+                  label: 'X',
+                  onPress: () => {
+                    setIsOnProgress(false);
+                  },
+                }}>
+                Sorry, this feature is on progress!
+              </Snackbar>
             </View>
             {/* End of Popular For You  */}
             {/* New Recipes */}

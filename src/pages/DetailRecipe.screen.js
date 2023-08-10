@@ -61,11 +61,15 @@ function DetailRecipe(props) {
               borderRadius: 100,
             }}>
             <Pressable
-              onPress={() =>
-                from == 'more'
-                  ? navigation.navigate('More')
-                  : navigation.navigate('Home')
-              }>
+              onPress={() => {
+                if (from == 'More') {
+                  navigation.navigate('More');
+                } else if (from == 'myrecipe') {
+                  navigation.navigate('MyRecipe');
+                } else {
+                  navigation.navigate('Home');
+                }
+              }}>
               <Icon name="arrow-left" size={30} color="#fff" />
             </Pressable>
           </View>
@@ -114,11 +118,21 @@ function DetailRecipe(props) {
           ) : (
             <>
               <View>
-                <YoutubePlayer
-                  height={300}
-                  play={false}
-                  videoId={recipe.videoLink.split('/')[3]}
-                />
+                {recipe.videoLink.split('/')[2] == 'youtu.be' ? (
+                  <>
+                    <YoutubePlayer
+                      height={300}
+                      play={false}
+                      videoId={recipe.videoLink.split('/')[3]}
+                    />
+                  </>
+                ) : (
+                  <YoutubePlayer
+                    height={300}
+                    play={false}
+                    videoId={recipe.videoLink.split('=')[1]}
+                  />
+                )}
               </View>
             </>
           )}

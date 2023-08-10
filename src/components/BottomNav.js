@@ -12,7 +12,10 @@ function BottomNav(props) {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 20,
+        paddingRight: 20,
         backgroundColor: '#fff',
         position: 'absolute',
         bottom: 20,
@@ -21,7 +24,7 @@ function BottomNav(props) {
       <Pressable onPress={() => navigation.navigate('Home')}>
         <Icon
           name="home"
-          size={20}
+          size={25}
           color={active == 'Home' ? '#eeeeee' : '#6e80b0'}
           style={active == 'Home' ? styles.iconActive : styles.icon}
         />
@@ -29,7 +32,7 @@ function BottomNav(props) {
       <Pressable onPress={() => navigation.navigate('AddRecipe')}>
         <Icon
           name="plus"
-          size={20}
+          size={25}
           color={active == 'AddRecipe' ? '#eeeeee' : '#6e80b0'}
           style={active == 'AddRecipe' ? styles.iconActive : styles.icon}
         />
@@ -37,7 +40,7 @@ function BottomNav(props) {
       <Pressable onPress={() => navigation.navigate('Chat')}>
         <Icon
           name="comment"
-          size={20}
+          size={25}
           color={active == 'Login' ? '#eeeeee' : '#6e80b0'}
           style={active == 'Login' ? styles.iconActive : styles.icon}
         />
@@ -45,25 +48,23 @@ function BottomNav(props) {
       <Pressable onPress={() => navigation.navigate('Profile')}>
         <Icon
           name="user"
-          size={20}
+          size={25}
           color={active == 'Profile' ? '#eeeeee' : '#6e80b0'}
           style={active == 'Profile' ? styles.iconActive : styles.icon}
         />
       </Pressable>
     </View>
-    // <KeyboardAvoidingView>
-    // </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   iconActive: {
-    padding: 20,
+    padding: 10,
     backgroundColor: '#EEC302',
-    borderRadius: 20,
+    borderRadius: 10,
   },
   icon: {
-    padding: 20,
+    padding: 15,
   },
 });
 

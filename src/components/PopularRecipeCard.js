@@ -11,6 +11,7 @@ function PopularRecipeCard(props) {
         <View style={styles.popularCard}>
           <Image
             source={{uri: recipe?.recipePicture}}
+            defaultSource={require('../assets/image-placeholder.jpg')}
             style={styles.popularImage}
           />
           <View>

@@ -11,6 +11,7 @@ import {
   Image,
   TouchableHighlight,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Snackbar} from 'react-native-paper';
@@ -68,7 +69,9 @@ function Register(props) {
 
   return (
     <>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}>
@@ -124,10 +127,6 @@ function Register(props) {
                 secureTextEntry={true}
                 placeholder="Password"
               />
-              <Text
-                style={{textAlign: 'right', marginRight: 12, marginBottom: 12}}>
-                Forgot Password?
-              </Text>
               <View style={{margin: 12}}>
                 <TouchableHighlight
                   underlayColor="white"
@@ -181,6 +180,9 @@ function Register(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   profileIcon: {
     padding: 20,
     margin: 20,

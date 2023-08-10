@@ -23,7 +23,7 @@ function Chat(props) {
   const [profile, setProfile] = React.useState([]);
 
   React.useEffect(() => {
-    if (Object.keys(state.authSlice.userData).length == 0) {
+    if (state?.authSlice?.token == '') {
       navigation.navigate('Login');
     } else {
       setProfile(state?.authSlice?.userData);
@@ -43,9 +43,19 @@ function Chat(props) {
       ]);
       database()
         .ref()
+        .orderByValue('date')
         .once('value')
         .then(snapshot => {
-          console.log('Messages data: ', snapshot.val());
+          const data = snapshot.val();
+          const dataMessages = [];
+          for (let key in data) {
+            dataMessages.unshift(data[key].messages);
+          }
+          dataMessages.map(item => {
+            setMessages(previousMessages =>
+              GiftedChat.append(previousMessages, item),
+            );
+          });
         });
     }
   }, []);
@@ -58,6 +68,7 @@ function Chat(props) {
     newReference
       .set({
         messages,
+        date: `${new Date()}`,
       })
       .then(() => console.log('Data updated.'));
   }, []);
@@ -77,7 +88,7 @@ function Chat(props) {
           messages={messages}
           onSend={messages => onSend(messages)}
           user={{
-            _id: 1,
+            _id: profile?.id,
             name: profile?.name,
             avatar: profile?.profilePicture,
           }}

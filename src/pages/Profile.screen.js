@@ -7,8 +7,8 @@ import {
   View,
   Image,
   Text,
-  Pressable,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
@@ -29,7 +29,7 @@ function Profile(props) {
   const {width, height} = Dimensions.get('window');
 
   React.useEffect(() => {
-    if (Object.keys(state.authSlice.userData).length == 0) {
+    if (state?.authSlice?.token == '') {
       navigation.navigate('Login');
     } else {
       setProfile(state?.authSlice?.userData);
@@ -41,6 +41,7 @@ function Profile(props) {
       addAuth({
         userData: {},
         token: '',
+        myRecipes: {},
       }),
     );
     navigation.navigate('Home');
@@ -53,9 +54,7 @@ function Profile(props) {
           width,
           height,
         }}>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
           <View style={{backgroundColor: '#EEC302'}}>
             <View
               style={{
@@ -65,11 +64,7 @@ function Profile(props) {
                 paddingBottom: 40,
               }}>
               <Image
-                // source={require('../assets/profile-icon.jpg')}
-                source={
-                  {uri: profile?.profilePicture} ??
-                  require('../assets/profile-icon.jpg')
-                }
+                source={{uri: profile?.profilePicture}}
                 style={styles.profileIcon}
               />
               <Text
@@ -80,44 +75,56 @@ function Profile(props) {
                   fontWeight: 'bold',
                   fontSize: 20,
                 }}>
-                {profile.fullname}
+                {profile?.fullname}
               </Text>
             </View>
           </View>
           <View style={styles.profileCard}>
-            <View style={styles.list}>
-              <View
-                style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
-                <Icon name="user" size={30} color="#EEC302" />
-                <Text style={{fontSize: 16, color: 'black'}}>Edit Profile</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('EditProfile');
+              }}>
+              <View style={styles.list}>
+                <View
+                  style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
+                  <Icon name="user" size={30} color="#EEC302" />
+                  <Text style={{fontSize: 16, color: 'black'}}>
+                    Edit Profile
+                  </Text>
+                </View>
+                <Icon name="angle-right" size={30} color="black" />
               </View>
-              <Icon name="angle-right" size={30} color="black" />
-            </View>
-            <View style={styles.list}>
-              <View
-                style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
-                <Icon name="cloud-upload" size={25} color="#EEC302" />
-                <Text style={{fontSize: 16, color: 'black'}}>My Recipe</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('MyRecipe');
+              }}>
+              <View style={styles.list}>
+                <View
+                  style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
+                  <Icon name="cloud-upload" size={25} color="#EEC302" />
+                  <Text style={{fontSize: 16, color: 'black'}}>My Recipe</Text>
+                </View>
+                <Icon name="angle-right" size={30} color="black" />
               </View>
-              <Icon name="angle-right" size={30} color="black" />
-            </View>
-            <View style={styles.list}>
+            </TouchableOpacity>
+            {/* <View style={styles.list}>
               <View
                 style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
                 <Icon name="save" size={30} color="#EEC302" />
                 <Text style={{fontSize: 16, color: 'black'}}>Saved Recipe</Text>
               </View>
               <Icon name="angle-right" size={30} color="black" />
-            </View>
-            <View style={styles.list}>
+            </View> */}
+            {/* <View style={styles.list}>
               <View
                 style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
                 <Icon name="heart" size={30} color="#EEC302" />
                 <Text style={{fontSize: 16, color: 'black'}}>Liked Recipe</Text>
               </View>
               <Icon name="angle-right" size={30} color="black" />
-            </View>
-            <Pressable onPress={handleLogout}>
+            </View> */}
+            <TouchableOpacity onPress={handleLogout}>
               <View style={styles.list}>
                 <View
                   style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
@@ -125,7 +132,7 @@ function Profile(props) {
                   <Text style={{fontSize: 16, color: 'black'}}>Logout</Text>
                 </View>
               </View>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </ScrollView>
         <BottomNav navigation={props.navigation} active={'Profile'} />

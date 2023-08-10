@@ -9,8 +9,9 @@ import {
   Text,
   TextInput,
   Pressable,
-  TouchableHighlight,
+  TouchableOpacity,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -30,7 +31,7 @@ function Login(props) {
   };
 
   React.useEffect(() => {
-    if (Object.keys(state.authSlice.userData).length != 0) {
+    if (state?.authSlice?.token != '') {
       navigation.navigate('Profile');
     }
   }, []);
@@ -49,15 +50,27 @@ function Login(props) {
         password: password,
       })
       .then(response => {
-        dispatch(
-          addAuth({
-            userData: response?.data?.data,
-            token: response?.data?.token,
-          }),
-        );
+        const profile = response?.data?.data;
+        const token = response?.data?.token;
+        setData(profile);
+        axios
+          .get(
+            `https://vast-mite-smock.cyclic.app/recipes?user_id=${profile?.id}`,
+          )
+          .then(responseRecipes => {
+            const myRecipes = responseRecipes?.data?.data;
+            dispatch(
+              addAuth({
+                userData: profile,
+                token,
+                myRecipes,
+              }),
+            );
+          });
         setIsSuccess(true);
       })
       .catch(error => {
+        console.log(error);
         setErrorMessages(error?.response?.data?.message);
       })
       .finally(() => {
@@ -67,7 +80,9 @@ function Login(props) {
 
   return (
     <>
-      <KeyboardAvoidingView style={{flex: 1}}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}>
@@ -101,12 +116,8 @@ function Login(props) {
                 secureTextEntry={true}
                 placeholder="Password"
               />
-              <Text
-                style={{textAlign: 'right', marginRight: 12, marginBottom: 12}}>
-                Forgot Password?
-              </Text>
               <View style={{margin: 12}}>
-                <TouchableHighlight
+                <TouchableOpacity
                   underlayColor="white"
                   onPress={handleLogin}
                   disabled={isLoading}>
@@ -115,7 +126,7 @@ function Login(props) {
                       {isLoading ? 'Loading...' : 'LOG IN'}
                     </Text>
                   </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
               </View>
               <View
                 style={{
@@ -161,6 +172,9 @@ function Login(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   profileIcon: {
     padding: 20,
     margin: 20,

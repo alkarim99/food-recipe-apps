@@ -14,6 +14,7 @@ function NewRecipeCard(props) {
           }}>
           <Image
             source={{uri: recipe?.recipePicture}}
+            defaultSource={require('../assets/image-placeholder.jpg')}
             style={{
               width: 150,
               height: 200,
