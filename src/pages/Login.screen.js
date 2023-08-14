@@ -52,7 +52,6 @@ function Login(props) {
       .then(response => {
         const profile = response?.data?.data;
         const token = response?.data?.token;
-        setData(profile);
         axios
           .get(
             `https://vast-mite-smock.cyclic.app/recipes?user_id=${profile?.id}`,
