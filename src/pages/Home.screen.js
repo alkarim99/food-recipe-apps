@@ -66,17 +66,32 @@ function Home(props) {
     axios
       .get(`https://vast-mite-smock.cyclic.app/recipes?keyword=${searchQuery}`)
       .then(response => {
-        const result = response?.data?.data;
-        props.navigation.navigate('Result', {result});
+        let result = [];
+        if (response?.data?.status) {
+          result = response?.data?.data;
+        }
+        const title = 'Search Recipe Result';
+        props.navigation.navigate('Result', {result, title});
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  const [isOnProgress, setIsOnProgress] = React.useState(false);
-  const handleFeatureOnProgress = () => {
-    setIsOnProgress(true);
+  const handleCategory = category => {
+    axios
+      .get(`https://vast-mite-smock.cyclic.app/recipes/category/${category}`)
+      .then(response => {
+        let result = [];
+        if (response?.data?.status) {
+          result = response?.data?.data;
+        }
+        const title = `${category} Category`;
+        props.navigation.navigate('Result', {result, title});
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   let displayNewRecipes = [];
@@ -105,59 +120,78 @@ function Home(props) {
               }}
             />
             {/* Popular For You */}
-            <View style={{marginBottom: 10}}>
+            <View style={{marginBottom: 20}}>
               <Text style={styles.titleText}>Popular For You</Text>
             </View>
-            <View>
+            <ScrollView horizontal>
               <View
                 style={{
                   marginBottom: 30,
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  gap: 15,
                 }}>
-                <TouchableOpacity onPress={handleFeatureOnProgress}>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleCategory('rice');
+                  }}>
                   <Image
                     style={styles.icon}
-                    source={require('../assets/icon-1.png')}
+                    source={require('../assets/fried-rice.png')}
+                  />
+                  <Text style={styles.iconText}>Rice</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleCategory('noodle');
+                  }}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/noodles.png')}
+                  />
+                  <Text style={styles.iconText}>Noodle</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleCategory('soup');
+                  }}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/soup.png')}
                   />
                   <Text style={styles.iconText}>Soup</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleFeatureOnProgress}>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleCategory('dessert');
+                  }}>
                   <Image
                     style={styles.icon}
-                    source={require('../assets/icon-2.png')}
-                  />
-                  <Text style={styles.iconText}>Chicken</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleFeatureOnProgress}>
-                  <Image
-                    style={styles.icon}
-                    source={require('../assets/icon-3.png')}
-                  />
-                  <Text style={styles.iconText}>Seafood</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleFeatureOnProgress}>
-                  <Image
-                    style={styles.icon}
-                    source={require('../assets/icon-4.png')}
+                    source={require('../assets/affogato.png')}
                   />
                   <Text style={styles.iconText}>Dessert</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleCategory('spicy');
+                  }}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/chili-pepper.png')}
+                  />
+                  <Text style={styles.iconText}>Spicy</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleCategory('uncategorized');
+                  }}>
+                  <Image
+                    style={styles.icon}
+                    source={require('../assets/other.png')}
+                  />
+                  <Text style={styles.iconText}>Others</Text>
+                </TouchableOpacity>
               </View>
-              <Snackbar
-                visible={isOnProgress}
-                style={{backgroundColor: '#CB3837'}}
-                onDismiss={() => setIsOnProgress(false)}
-                duration={1000}
-                action={{
-                  label: 'X',
-                  onPress: () => {
-                    setIsOnProgress(false);
-                  },
-                }}>
-                Sorry, this feature is on progress!
-              </Snackbar>
-            </View>
+            </ScrollView>
             {/* End of Popular For You  */}
             {/* New Recipes */}
             <View style={{marginBottom: 10}}>

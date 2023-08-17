@@ -8,7 +8,7 @@ import PopularRecipeCard from '../components/PopularRecipeCard';
 
 function Result(props) {
   const {navigation, route} = props;
-  const {result} = route.params;
+  const {result, title} = route.params;
 
   return (
     <>
@@ -18,7 +18,7 @@ function Result(props) {
           style={{marginRight: 20}}>
           <Icon name="chevron-left" size={30} color="#EEC302" />
         </Pressable>
-        <Text style={styles.headerText}>Search Recipe Result</Text>
+        <Text style={styles.headerText}>{title.toUpperCase()}</Text>
       </View>
       <ScrollView style={{padding: 10}}>
         {result?.length != 0 ? (

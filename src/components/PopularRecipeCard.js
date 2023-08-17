@@ -18,7 +18,7 @@ function PopularRecipeCard(props) {
             <Text style={styles.popularText} numberOfLines={1}>
               {recipe?.title}
             </Text>
-            <Text>spicy, salted</Text>
+            <Text>{recipe?.category ?? 'uncategorized'}</Text>
           </View>
         </View>
       </Pressable>

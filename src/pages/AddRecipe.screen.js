@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
 import {Snackbar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
@@ -19,7 +20,23 @@ import axios from 'axios';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {addAuth} from '../store/reducers/authSlice';
 
-const createFormData = (photo, title, videoLink, ingredients, userId) => {
+const listCategory = [
+  'rice',
+  'noodle',
+  'soup',
+  'dessert',
+  'spicy',
+  'uncategorized',
+];
+
+const createFormData = (
+  photo,
+  title,
+  videoLink,
+  ingredients,
+  category,
+  userId,
+) => {
   const data = new FormData();
 
   data.append('recipePicture', {
@@ -34,6 +51,7 @@ const createFormData = (photo, title, videoLink, ingredients, userId) => {
   data.append('title', title);
   data.append('ingredients', ingredients);
   data.append('videoLink', videoLink);
+  data.append('category', category);
   data.append('user_id', userId);
 
   return data;
@@ -45,6 +63,7 @@ function AddRecipe(props) {
   const dispatch = useDispatch();
   const [photo, setPhoto] = React.useState(null);
   const [title, SetTitle] = React.useState([]);
+  const [category, setCategory] = React.useState('uncategorize');
   const [videoLink, SetVideoLink] = React.useState([]);
   const [ingredients, SetIngredients] = React.useState([]);
   const [isLoading, SetIsLoading] = React.useState(false);
@@ -74,6 +93,7 @@ function AddRecipe(props) {
       title,
       videoLink,
       ingredients,
+      category,
       userId,
     );
     axios
@@ -83,14 +103,16 @@ function AddRecipe(props) {
         },
       })
       .then(response => {
+        const userData = state?.authSlice?.userData;
+        const token = state?.authSlice?.token;
         axios
           .get(`https://vast-mite-smock.cyclic.app/recipes?user_id=${userId}`)
           .then(responseRecipes => {
             const myRecipes = responseRecipes?.data?.data;
             dispatch(
               addAuth({
-                userData: state?.authSlice?.userData,
-                token: state?.authSlice?.token,
+                userData,
+                token,
                 myRecipes,
               }),
             );
@@ -120,21 +142,25 @@ function AddRecipe(props) {
           style={{padding: 10}}
           contentInsetAdjustmentBehavior="automatic">
           <View style={{paddingBottom: 1000}}>
-            {photo?.assets[0]?.uri ? (
-              <>
-                <Image
-                  source={
-                    {
-                      uri: photo?.assets[0]?.uri,
-                    } ?? require('../assets/Group-697-1.png')
-                  }
-                  style={{
-                    width: '100%',
-                    height: '50%',
-                    marginBottom: '10px',
-                  }}
-                />
-              </>
+            {photo?.assets ? (
+              photo?.assets[0]?.uri ? (
+                <>
+                  <Image
+                    source={
+                      {
+                        uri: photo?.assets[0]?.uri,
+                      } ?? require('../assets/Group-697-1.png')
+                    }
+                    style={{
+                      width: '100%',
+                      height: '50%',
+                      marginBottom: '10px',
+                    }}
+                  />
+                </>
+              ) : (
+                ''
+              )
             ) : (
               ''
             )}
@@ -153,6 +179,26 @@ function AddRecipe(props) {
               value={title}
               placeholder="Recipe Title"
             />
+            <View style={{margin: 12}}>
+              <Text>Recipe Category</Text>
+              <SelectDropdown
+                data={listCategory}
+                onSelect={(selectedItem, index) => {
+                  console.log(selectedItem, index);
+                  setCategory(selectedItem);
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  // text represented after item is selected
+                  // if data array is an array of objects then return selectedItem.property to render after item is selected
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  // text represented for each item in dropdown
+                  // if data array is an array of objects then return item.property to represent item in dropdown
+                  return item;
+                }}
+              />
+            </View>
             <View style={{margin: 12}}>
               <TextInput
                 style={styles.input}
